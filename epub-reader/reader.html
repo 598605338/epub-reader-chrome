@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>EPUB阅读器</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="epub-simple.js"></script>
+</head>
+<body class="reader-page">
+  <div class="reader-layout">
+    <!-- 左侧目录栏 -->
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <h3 class="sidebar-title">目录</h3>
+      </div>
+      <div id="tocContainer" class="toc-container">
+        <!-- 目录内容将在这里动态生成 -->
+      </div>
+    </div>
+    
+    <!-- 主内容区域 -->
+    <div class="main-content">
+      <!-- 工具栏 -->
+      <div class="toolbar">
+        <div class="toolbar-group">
+          <span class="toolbar-label">字体:</span>
+          <select id="fontSelect" class="control-select">
+            <option value="yahei">微软雅黑</option>
+            <option value="simsun">宋体</option>
+          </select>
+        </div>
+        
+        <div class="toolbar-group">
+          <span class="toolbar-label">字号:</span>
+          <button id="fontSizeDown" class="control-btn">A-</button>
+          <span id="fontSizeDisplay" class="toolbar-label">19px</span>
+          <button id="fontSizeUp" class="control-btn">A+</button>
+        </div>
+        
+        <div class="toolbar-group">
+          <span class="toolbar-label">行距:</span>
+          <input type="range" id="lineHeightRange" class="control-range" min="1.2" max="2.5" step="0.1" value="1.6">
+          <span id="lineHeightDisplay" class="toolbar-label">1.6</span>
+        </div>
+        
+        <div class="toolbar-group">
+          <span class="toolbar-label">主题:</span>
+          <button id="themeLight" class="control-btn active">默认</button>
+          <button id="themeSepia" class="control-btn">护眼</button>
+          <button id="themeGreen" class="control-btn">绿豆沙</button>
+          <button id="themeDark" class="control-btn">夜间</button>
+          <button id="themeCustom" class="control-btn">自定义</button>
+        </div>
+        
+        <div class="toolbar-group">
+          <span class="toolbar-label">背景色:</span>
+          <input type="color" id="customBgColor" class="control-color" value="#ffffff" title="选择背景色">
+          <input type="color" id="customTextColor" class="control-color" value="#333333" title="选择文字色">
+          <button id="applyColors" class="control-btn">应用</button>
+          <button id="resetColors" class="control-btn">重置</button>
+        </div>
+      </div>
+      
+      <!-- 阅读区域 -->
+      <div class="reading-area">
+        <div id="reader" class="reading-content"></div>
+      </div>
+      
+      <!-- 底部控制栏 -->
+      <div class="controls">
+        <button id="prev">上一章</button>
+        <button id="next">下一章</button>
+      </div>
+    </div>
+  </div>
+  
+  <script src="reader.js"></script>
+</body>
+</html> 

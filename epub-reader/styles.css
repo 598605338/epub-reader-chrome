@@ -1,0 +1,525 @@
+/* 全局样式 - 确保阅读器页面网页级别无滚动条 */
+html, body.reader-page {
+  overflow: hidden;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Popup页面样式 */
+body:not(.reader-page) {
+  width: 300px;
+  padding: 10px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--bg-color, #ffffff);
+  color: var(--text-color, #333333);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.container {
+  text-align: center;
+}
+
+/* 阅读器页面样式 */
+body.reader-page {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  background: #f5f5f5; /* 固定网页背景色，不受主题影响 */
+  overflow: hidden; /* 隐藏网页滚动条 */
+}
+
+/* 移除旧的#reader样式，避免滚动条冲突 */
+
+/* 移除旧的固定定位controls样式，避免覆盖问题 */
+
+/* 旧的固定定位controls样式已移除 */
+
+/* 通用按钮样式 */
+button {
+  padding: 8px 16px;
+  background: #007cba;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  min-width: 80px;
+}
+
+button:hover:not(:disabled) {
+  background: #005a87;
+  transform: translateY(-1px);
+}
+
+button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+button:disabled {
+  background: #ccc;
+  color: #888;
+  cursor: not-allowed;
+  transform: none;
+}
+
+#toc-btn {
+  background: #4caf50;
+}
+
+#toc-btn:hover:not(:disabled) {
+  background: #45a049;
+}
+
+/* 输入文件样式 */
+input[type="file"] {
+  margin: 10px 0;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 260px;
+}
+
+h2 {
+  color: #333;
+  margin: 10px 0;
+}
+
+/* 旧的#reader内容样式保留部分，但移除可能导致滚动冲突的部分 */
+.reading-content p {
+  margin: 1em 0;
+  text-indent: 2em;
+  line-height: var(--line-height, 1.6);
+}
+
+.reading-content h1, .reading-content h2, .reading-content h3, .reading-content h4, .reading-content h5, .reading-content h6 {
+  margin: 1.5em 0 1em 0;
+  color: var(--text-color, #333);
+  line-height: 1.4;
+}
+
+.reading-content blockquote {
+  margin: 1em 2em;
+  padding: 0.5em 1em;
+  border-left: 3px solid #007cba;
+  background: #f8f9fa;
+}
+
+.reading-content img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1em auto;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* 目录样式 */
+.toc-container {
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.toc-header {
+  padding: 10px;
+  background: #e0e0e0;
+  font-weight: bold;
+  border-bottom: 1px solid #ddd;
+  position: sticky;
+  top: 0;
+}
+
+.toc-item {
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.toc-item:hover {
+  background: #f0f0f0;
+}
+
+.toc-item.current {
+  background: #e3f2fd;
+}
+
+.toc-item span {
+  color: #007cba;
+  display: block;
+}
+
+.toc-item.current span {
+  font-weight: bold;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 350px; /* 移动端也适当增加宽度 */
+  }
+  
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .toolbar-group {
+    justify-content: center;
+  }
+  
+  .reading-area {
+    padding: 15px 0 15px 0; /* 移动端也使用正常padding */
+  }
+  
+  .reading-content {
+    max-width: 100%;
+    margin: 0; /* 移动端也移除margin */
+    padding: 20px; /* 移动端减少内边距，移除底部padding */
+    font-size: calc(var(--font-size, 19px) - 2px); /* 移动端字体稍小 */
+  }
+  
+  .reading-content p {
+    text-indent: 1em;
+    font-size: calc(var(--font-size, 19px) - 2px);
+  }
+}
+
+/* 主要布局 */
+.reader-layout {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  background: #f5f5f5; /* 固定网页背景色 */
+}
+
+/* 左侧目录栏 - 调整为全屏高度 */
+.sidebar {
+  width: 450px; /* 增加一半：从300px增加到450px */
+  background: #ffffff; /* 固定侧边栏背景色 */
+  border-right: 1px solid #e9ecef;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* 确保全屏高度 */
+}
+
+.sidebar-header {
+  padding: 15px;
+  border-bottom: 1px solid #e9ecef;
+  background: #f8f9fa; /* 固定头部背景色 */
+  flex-shrink: 0;
+}
+
+.sidebar-title {
+  font-size: 18px; /* 增加字体大小 */
+  font-weight: bold;
+  margin: 0;
+  color: #333;
+}
+
+/* 目录容器 - 占据剩余空间 */
+.toc-container {
+  padding: 0;
+  flex: 1; /* 占据剩余空间 */
+  overflow-y: auto; /* 允许滚动 */
+  background: #ffffff;
+  border: none;
+  border-radius: 0;
+  margin: 0;
+  max-height: none; /* 移除最大高度限制 */
+}
+
+.toc-item {
+  padding: 12px 20px;
+  border-bottom: 1px solid #e9ecef;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  color: #333;
+  font-size: 18px; /* 设置目录字体大小为18px */
+}
+
+.toc-item:hover {
+  background: #e3f2fd;
+}
+
+.toc-item.active {
+  background: #e3f2fd;
+  font-weight: bold;
+  border-left: 3px solid #007cba;
+}
+
+/* 主内容区域 */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #f5f5f5; /* 固定背景色 */
+  height: 100vh; /* 确保全屏高度 */
+}
+
+/* 工具栏 */
+.toolbar {
+  background: #ffffff; /* 固定工具栏背景色 */
+  border-bottom: 1px solid #e9ecef;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: flex-start; /* 改为左对齐 */
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px; /* 增加间距 */
+  flex-shrink: 0;
+}
+
+.toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.toolbar-label {
+  font-size: 14px;
+  color: #666;
+  margin-right: 5px;
+}
+
+/* 控制按钮和选择器 */
+.control-btn {
+  padding: 6px 12px;
+  border: 1px solid #ddd;
+  background: #ffffff;
+  color: #333;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.control-btn:hover {
+  background: #f8f9fa;
+  border-color: #007cba;
+}
+
+.control-btn.active {
+  background: #007cba;
+  color: white;
+  border-color: #007cba;
+}
+
+.control-select {
+  padding: 4px 8px;
+  border: 1px solid #ddd;
+  background: #ffffff;
+  color: #333;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.control-range {
+  width: 100px;
+}
+
+/* 颜色选择器样式 */
+.control-color {
+  width: 40px;
+  height: 30px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  background: none;
+  padding: 0;
+  margin: 0 2px;
+}
+
+.control-color:hover {
+  border-color: #007cba;
+}
+
+/* 应用颜色按钮特殊样式 */
+#applyColors {
+  background: #28a745;
+  color: white;
+  border-color: #28a745;
+}
+
+#applyColors:hover {
+  background: #218838;
+  border-color: #1e7e34;
+}
+
+/* 阅读区域 - 唯一的滚动容器 (v2.8 - 最终版本) */
+.reading-area {
+  flex: 1;
+  overflow-y: auto; /* 只有这个容器有滚动条 */
+  overflow-x: hidden; /* 隐藏横向滚动条 */
+  padding: 20px 0 20px 0; /* 桌面端正常的顶部和侧边padding */
+  background: var(--bg-color, #f5f5f5); /* 使用主题背景色 */
+  display: flex;
+  justify-content: center; /* 水平居中 */
+  transition: background-color 0.3s ease; /* 添加过渡效果 */
+  box-sizing: border-box; /* 确保padding计算正确 */
+}
+
+/* 阅读内容区域 */
+.reading-content {
+  max-width: 1300px; /* 调整宽度为1300px */
+  width: 100%;
+  margin: 0; /* 移除margin，贴合容器边缘 */
+  padding: 40px; /* 保持其他方向的padding */
+  font-family: var(--reading-font, 'Microsoft YaHei', sans-serif);
+  font-size: var(--font-size, 19px); /* 默认字体大小改为19px */
+  line-height: var(--line-height, 1.6);
+  color: var(--text-color, #333);
+  background: var(--bg-color, #ffffff); /* 应用主题背景色 */
+  box-sizing: border-box; /* 确保padding包含在尺寸内 */
+  transition: background-color 0.3s ease, color 0.3s ease; /* 添加过渡效果 */
+  overflow: visible; /* 确保内容区域不产生滚动条 */
+  height: auto; /* 让内容自然撑开高度 */
+  min-height: calc(100vh - 200px); /* 设置最小高度确保有足够空间 */
+}
+
+/* 确保主题样式正确应用到阅读内容和滚动区域 */
+.theme-sepia .reading-content {
+  background: var(--bg-color, #f7f3e9) !important;
+  color: var(--text-color, #5c4b37) !important;
+}
+
+.theme-sepia .reading-area {
+  background: var(--bg-color, #f7f3e9) !important;
+}
+
+.theme-green .reading-content {
+  background: var(--bg-color, #C7EDCC) !important;
+  color: var(--text-color, #2d5016) !important;
+}
+
+.theme-green .reading-area {
+  background: var(--bg-color, #C7EDCC) !important;
+}
+
+.theme-dark .reading-content {
+  background: var(--bg-color, #1a1a1a) !important;
+  color: var(--text-color, #e0e0e0) !important;
+}
+
+.theme-dark .reading-area {
+  background: var(--bg-color, #1a1a1a) !important;
+}
+
+/* 默认主题的阅读内容和滚动区域 */
+body:not(.theme-sepia):not(.theme-green):not(.theme-dark) .reading-content {
+  background: var(--bg-color, #ffffff) !important;
+  color: var(--text-color, #333333) !important;
+}
+
+body:not(.theme-sepia):not(.theme-green):not(.theme-dark) .reading-area {
+  background: var(--bg-color, #ffffff) !important;
+}
+
+/* 底部控制栏 */
+.controls {
+  background: #ffffff; /* 固定背景色 */
+  border-top: 1px solid #e9ecef;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-shrink: 0;
+}
+
+.controls button {
+  padding: 10px 20px;
+  background: #007cba;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s ease;
+}
+
+.controls button:hover {
+  background: #005a8b;
+}
+
+.controls button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* 主题样式 - 只影响内容区域 */
+/* 默认（白色）主题 */
+:root {
+  --bg-color: #ffffff;
+  --text-color: #333333;
+  --reading-font: 'Microsoft YaHei', sans-serif;
+  --font-size: 19px; /* 默认字体大小改为19px */
+  --line-height: 1.6;
+}
+
+/* 护眼色主题 */
+.theme-sepia {
+  --bg-color: #f7f3e9;
+  --text-color: #5c4b37;
+}
+
+/* 绿豆沙主题 */
+.theme-green {
+  --bg-color: #C7EDCC;
+  --text-color: #2d5016;
+}
+
+/* 黑色主题 */
+.theme-dark {
+  --bg-color: #1a1a1a;
+  --text-color: #e0e0e0;
+}
+
+/* 字体类型 */
+.font-yahei {
+  --reading-font: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+}
+
+.font-simsun {
+  --reading-font: 'SimSun', '宋体', serif;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 350px; /* 移动端也适当增加宽度 */
+  }
+  
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .toolbar-group {
+    justify-content: center;
+  }
+  
+  .reading-area {
+    padding: 15px 0 15px 0; /* 移动端也使用正常padding */
+  }
+  
+  .reading-content {
+    max-width: 100%;
+    margin: 0; /* 移动端也移除margin */
+    padding: 20px; /* 移动端减少内边距，移除底部padding */
+    font-size: calc(var(--font-size, 19px) - 2px); /* 移动端字体稍小 */
+  }
+  
+  .reading-content p {
+    text-indent: 1em;
+    font-size: calc(var(--font-size, 19px) - 2px);
+  }
+} 

@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "EPUB阅读器",
+  "description": "在Chrome中阅读EPUB电子书",
+  "version": "1.0",
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["reader.html"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+} 
